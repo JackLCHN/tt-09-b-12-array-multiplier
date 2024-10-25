@@ -27,62 +27,50 @@ module tt_um_b_12_array_multiplier (
 endmodule
 
 
-module adder(
-    input a,
-    input b,
-    input c,
-    output y,
-    output z
-    );
-    
-// Internal Signals
-    wire int_sig1;
-    wire int_sig2;
-    wire int_sig3;
-    
-        
-    xor(y,a,b,c);
-    and(int_sig1,a,b);
-    and(int_sig2,a,c);
-    and(int_sig3,b,c);
-    or(z,int_sig1,int_sig2,int_sig3);
-     
-endmodule
-
-module part(
-    input [3:0] m,
-    input [2:0] y,
-    input q4,
-    input c,
-    output [2:0] o,
-    output co,
-    output p);
-    wire [2:0] w;
-    
-    adder stage0 (m[0]&c,y[0],0,p,w[0]);
-    adder stage1 (m[1]&c,y[1],w[0],o[0],w[1]);
-    adder stage2 (m[2]&c,y[2],w[1],o[1],w[2]);
-    adder stage3 (m[3]&c,q4,w[2],o[2],co);
-  
-endmodule 
-
 module array_mult_structural(
-	input [3:0] m,
-	input [3:0] q,
-	output [7:0] p
+    input [3:0] m,
+    input [3:0] q,
+    output [7:0] p
+    );
+    wire hsig1, hsig2, hsig3, hsig4, hsig5, hsig6, hsig7, hsig8, hsig9;
+    wire vsig1, vsig2, vsig3, vsig4, vsig5, vsig6;
+    wire dsig1, dsig2;
+    //layer1
+    and(p[0], q[0], m[0]);
+    //layer2
+    fadder layer2_1(m[1]&q[0], m[0]&q[1], 1'b0, p[1], hsig1);
+    fadder layer2_2(m[2]&q[0], m[1]&q[1], hsig1, vsig1, hsig2);
+    fadder layer2_3(m[3]&q[0], m[2]&q[1], hsig2, vsig2, hsig3);
+    fadder layer2_4(m[3]&q[1], 1'b0, hsig3, vsig3, dsig1);
+    //layer3
+    fadder layer3_1(m[0]&q[2], vsig1, 1'b0, p[2], hsig4);
+    fadder layer3_2(m[1]&q[2], vsig2, hsig4, vsig4, hsig5);
+    fadder layer3_3(m[2]&q[2], vsig3, hsig5, vsig5, hsig6);
+    fadder layer3_4(m[3]&q[2], dsig1, hsig6, vsig6, dsig2);
+    //layer4
+    fadder layer4_1(m[0]&q[3], vsig4, 1'b0, p[3], hsig7);
+    fadder layer4_2(m[1]&q[3], vsig5, hsig7, p[4], hsig8);
+    fadder layer4_3(m[2]&q[3], vsig6, hsig8, p[5], hsig9);
+    fadder layer4_4(m[3]&q[3], dsig2, hsig9, p[6], p[7]);
+    
+endmodule
+module fadder(
+    input x,
+    input y,
+    input carry_in,
+    output z,
+    output carry_out
 );
-    wire [2:0] o1;
-    wire [2:0] o2;
-    wire [2:0] o3;
-    wire [2:0] o4;
-
-    wire [3:0] c;
-    part pa (m,3'b000,0,q[0],o1,c[0],p[0]);
-    part pb (m,o1,c[0],q[1],o2,c[1],p[1]);
-    part pc (m,o2,c[1],q[2],o3,c[2],p[2]);
-    part pd (m,o3,c[2],q[3],o4,c[3],p[3]);
-    assign p[4]=o4[0];
-    assign p[5]=o4[1];
-    assign p[6]=o4[2];
-    assign p[7]=c[3];
+    wire int_sig1, int_sig2, int_sig3, int_sig4, int_sig5, int_sig6, int_sig7, int_sig8;
+    assign int_sig1 = x & ~y;
+    assign int_sig2 = ~x & y;
+    assign int_sig3 = int_sig1 | int_sig2;
+    assign int_sig4 = int_sig3 & ~carry_in;
+    assign int_sig5 = ~int_sig3 & carry_in;
+    assign z = int_sig4 | int_sig5;
+    
+    assign int_sig6 = x & y;
+    assign int_sig7 = y & carry_in;
+    assign int_sig8 = carry_in & x;
+    assign carry_out = int_sig6 | int_sig7 | int_sig8;
 endmodule
