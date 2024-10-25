@@ -19,10 +19,10 @@ module tt_um_b_12_array_multiplier (
   // All output pins must be assigned. If not used, assign to 0.
   assign uio_out = 0;
   assign uio_oe  = 0;
-  array_mult_structural inst1(ui_in[7:4], ui_in[3:0], uo_out)
+  array_mult_structural inst1(ui_in[7:4], ui_in[3:0], uo_out);
 
   // List all unused inputs to prevent warnings
-  wire _unused = &{ena, clk, rst_n, uio_in 1'b0};
+  wire _unused = &{ena, clk, rst_n, uio_in, 1'b0};
 
 endmodule
 
