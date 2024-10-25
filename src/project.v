@@ -26,7 +26,7 @@ wire [7:0] p;
     wire [2:0] o1;
     wire [2:0] o2;
     wire [2:0] o3;
-     wire [2:0] o4;
+    wire [2:0] o4;
 
 	wire [3:0] c;
 	
