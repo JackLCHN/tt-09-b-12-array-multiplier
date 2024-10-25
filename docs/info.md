@@ -9,11 +9,11 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Explain how your project works
+Use a array multiplier to multiply two 4-bit binaries.
 
 ## How to test
 
-Explain how to use your project
+testbench is provided
 
 ## External hardware
 
