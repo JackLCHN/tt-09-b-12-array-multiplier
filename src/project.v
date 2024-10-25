@@ -22,7 +22,7 @@ wire [3:0] m = ui_in[7:4];
 wire [3:0] q = ui_in[3:0];
 wire [7:0] p;
 
-
+		
     wire [2:0] o1;
     wire [2:0] o2;
     wire [2:0] o3;
