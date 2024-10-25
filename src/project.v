@@ -17,38 +17,15 @@ module tt_um_b_12_array_multiplier (
 );
 
   // All output pins must be assigned. If not used, assign to 0.
-  
-wire [3:0] m = ui_in[7:4];
-wire [3:0] q = ui_in[3:0];
-wire [7:0] p;
-
-		
-    wire [2:0] o1;
-    wire [2:0] o2;
-    wire [2:0] o3;
-    wire [2:0] o4;
-
-	wire [3:0] c;
-	
-    assign p[4]=o4[0];
-    assign p[5]=o4[1];
-    assign p[6]=o4[2];
-    assign p[7]=c[3];
-	part pa (m,3'b000,0,q[0],o1,c[0],p[0]);
-	part pb (m,o1,c[0],q[1],o2,c[1],p[1]);
-	part pc (m,o2,c[1],q[2],o3,c[2],p[2]);
-	part pd (m,o3,c[2],q[3],o4,c[3],p[3]);
-  
-  assign uo_out = p;
-
-
   assign uio_out = 0;
   assign uio_oe  = 0;
+  array_mult_structural inst1(ui_in[7:4], ui_in[3:0], uo_out)
 
   // List all unused inputs to prevent warnings
-  wire _unused = &{ena, clk, rst_n, uio_in, 1'b0};
+  wire _unused = &{ena, clk, rst_n, uio_in 1'b0};
 
 endmodule
+
 
 module adder(
     input a,
@@ -88,3 +65,25 @@ module part(
     adder stage3 (m[3]&c,q4,w[2],o[2],co);
   
 endmodule 
+
+module array_mult_structural(
+	input [3:0] m,
+	input [3:0] q,
+	output [7:0] p
+);
+    wire [2:0] o1;
+    wire [2:0] o2;
+    wire [2:0] o3;
+     wire [2:0] o4;
+
+	wire [3:0] c;
+	
+    assign p[4]=o4[0];
+    assign p[5]=o4[1];
+    assign p[6]=o4[2];
+    assign p[7]=c[3];
+	part pa (m,3'b000,0,q[0],o1,c[0],p[0]);
+	part pb (m,o1,c[0],q[1],o2,c[1],p[1]);
+	part pc (m,o2,c[1],q[2],o3,c[2],p[2]);
+	part pd (m,o3,c[2],q[3],o4,c[3],p[3]);
+endmodule
