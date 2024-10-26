@@ -9,11 +9,13 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Use a array multiplier to multiply two 4-bit binaries.
+This is a array multiplier to multiply two 4-bit binaries.
+![Untitled Diagram drawio](https://github.com/user-attachments/assets/db7c928c-c02a-4c31-ab97-ec0417a7f243)
+
 
 ## How to test
 
-testbench is provided
+a testbench called test.py is given. where tests can be given to the project, to create a new test, change the value for dut.ui_in.value to 0x(any two integers), the product of the two integers will be calculated in the multiplier, and for assert dut.uo_out.value, change it to the expected output of the two integers you just inserted, if the program runs properly, no error should occur.
 
 ## External hardware
 
