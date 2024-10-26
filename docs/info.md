@@ -10,7 +10,7 @@ You can also include images in this folder and reference them in the markdown. E
 ## How it works
 
 This is a array multiplier to multiply two 4-bit binaries.
-![Untitled Diagram drawio](https://github.com/user-attachments/assets/db7c928c-c02a-4c31-ab97-ec0417a7f243)
+![Untitled Diagram drawio](https://github.com/user-attachments/assets/b4fffb0e-9ea4-4cdb-ab74-da03ab33f226)
 
 
 ## How to test
